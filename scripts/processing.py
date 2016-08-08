@@ -5,8 +5,7 @@ from skimage import io
 from scipy.ndimage import imread
 import Image
 import random
-
-
+from tqdm import tqdm
 
 def main():
     bg = Image.open("/home/lucas/PycharmProjects/synthetic_deep_schisto/cells_models/bg.png")
@@ -24,7 +23,7 @@ def main():
     VAL_RATIO = 0.2 #max 1
     N_PICS = 1000
 
-    for n in range(1, N_PICS + 1):
+    for n in tqdm(range(1, N_PICS + 1)):
 
         # ratio of validantion flag
         if random.randint(1, 10) <= (VAL_RATIO  * 10):
@@ -65,7 +64,7 @@ def main():
 
             bg_frame.paste(schisto_r, (x_coor, y_coor), schisto_r)
         bg_frame.save("/home/lucas/PycharmProjects/synthetic_deep_schisto/pics/{}_image_{}_|{}|.png".format(type_sample ,str(n), str(round(density_in_field, ndigits=3))))
-        print "Density in  field: ", density_in_field
+        #print "Density in  field: ", density_in_field
         #bg.show()
         #
         # io.imsave('merge.png', bg)
