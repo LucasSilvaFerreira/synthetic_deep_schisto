@@ -37,10 +37,19 @@ class images_parse():
 
 
             img_opened = io.imread(self.images[self.item_counted])
-            array_image =  resize(img_opened,(50, 50))
+
+            # print self.images[self.item_counted]
+            # io.imshow(img_opened)
+            # io.show()
+            # exit()
 
 
-            #img_pil.show()
+            array_image =  resize(img_opened,(50, 50)).transpose()
+
+            # io.imshow(array_image)
+            # io.show()
+            # exit()
+            #arary_image = array_image
             self.item_counted += 1
             return array_image
         else:
@@ -55,20 +64,21 @@ class images_parse():
 def convolution_training(train_input, validation_input):
 
     model = Sequential()
-    model.add(Convolution2D(100, 2, 2, input_shape=(50, 50, 3)))
+    model.add(Convolution2D(30, 2, 2, input_shape=(3, 50, 50)))
     model.add(Activation('relu'))
-    # model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+
+    model.add(Convolution2D(30, 4, 4))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
     #
-    # model.add(Convolution2D(32, 2, 2))
-    # model.add(Activation('relu'))
-    # model.add(MaxPooling2D(pool_size=(2, 2)))
-    # model.add(Dropout(0.1))
-    #
-    # model.add(Convolution2D(64, 3, 3, ))
-    # model.add(Activation('relu'))
-    # model.add(Convolution2D(10, 2, 2))
-    # model.add(Activation('relu'))
-    # model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Convolution2D(10, 2, 2))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+
+
 
 
     model.add(Flatten())
@@ -77,9 +87,7 @@ def convolution_training(train_input, validation_input):
     model.add(Dropout(0.2))
     model.add(Dense(100))
     model.add(Activation('relu'))
-    model.add(Dropout(0.2))
-    model.add(Dense(50))
-    model.add(Activation('relu'))
+
     model.add(Dropout(0.1))
 
     model.add(Dense(output_dim=1, init='uniform', activation='linear'))
@@ -99,8 +107,9 @@ def convolution_training(train_input, validation_input):
 
 
 def main():
-    train_imgs = images_parse("/home/lucas/PycharmProjects/synthetic_deep_schisto/pics", train=True)
-    validation_imgs = images_parse("/home/lucas/PycharmProjects/synthetic_deep_schisto/pics", train=False)
+    dir_pics_data = '/home/lucas/PycharmProjects/synthetic_deep_schisto/pics'
+    train_imgs = images_parse(dir_pics_data, train=True)
+    validation_imgs = images_parse(dir_pics_data, train=False)
 
 
     #print train_imgs.next().shape, len(train_imgs), len(train_imgs.get_density_list())

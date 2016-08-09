@@ -8,20 +8,19 @@ import random
 from tqdm import tqdm
 
 def main():
+    VAL_RATIO = 0.2 #max 1
+    N_PICS = 3000
+    DENSITY_VALUE = 10
     bg = Image.open("/home/lucas/PycharmProjects/synthetic_deep_schisto/cells_models/bg.png")
     print bg.size
     schisto = Image.open("/home/lucas/PycharmProjects/synthetic_deep_schisto/cells_models/sample1.png")
     white = Image.open("/home/lucas/PycharmProjects/synthetic_deep_schisto/cells_models/white.png")
     count_white_px = len([x for x in white.getdata()])
 
-
-
-
     print dir(schisto)
     print len([x for x in schisto.getdata() if sum(x)!= 0]), len([x for x in schisto.getdata()])
 
-    VAL_RATIO = 0.2 #max 1
-    N_PICS = 1000
+
 
     for n in tqdm(range(1, N_PICS + 1)):
 
@@ -32,7 +31,7 @@ def main():
             type_sample = "train"
 
 
-        density_generator = random.randint(1, 15)
+        density_generator = random.randint(1, DENSITY_VALUE)
         bg_frame = bg.copy()
         density_in_field = 0
         for x in range(density_generator):
@@ -45,20 +44,13 @@ def main():
             x_coor = random.randint(-10, 140)
             y_coor = random.randint(-10, 140)
 
-
             w_to_subtract.paste(schisto_r, (x_coor, y_coor), schisto_r)
-
 
             sub_value = len([ s for s in w_to_subtract.getdata() if sum(s) != 255 * 4])
 
-
-
             schisto_real_size = len ([ px_schisto for px_schisto in schisto_r.getdata() if sum (px_schisto)])
 
-
             density = float(sub_value)/schisto_real_size
-
-
 
             density_in_field += density
 
