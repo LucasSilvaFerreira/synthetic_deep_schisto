@@ -64,19 +64,16 @@ class images_parse():
 def convolution_training(train_input, validation_input):
 
     model = Sequential()
-    model.add(Convolution2D(30, 2, 2, input_shape=(3, 50, 50)))
+    model.add(Convolution2D(20, 6, 6, input_shape=(3, 50, 50)))
     model.add(Activation('relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-
-
-    model.add(Convolution2D(30, 4, 4))
+    model.add(Convolution2D(30, 3, 3))
     model.add(Activation('relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(MaxPooling2D(pool_size=(3, 3)))
 
     #
-    model.add(Convolution2D(10, 2, 2))
+    model.add(Convolution2D(30, 2, 2))
     model.add(Activation('relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(MaxPooling2D(pool_size=(3, 3)))
 
 
 
@@ -84,15 +81,17 @@ def convolution_training(train_input, validation_input):
     model.add(Flatten())
     model.add(Dense(100))
     model.add(Activation('relu'))
-    model.add(Dropout(0.2))
-    model.add(Dense(100))
-    model.add(Activation('relu'))
-
     model.add(Dropout(0.1))
+    # model.add(Dense(100))
+    # model.add(Activation('relu'))
+    # model.add(Dropout(0.1))
+    # model.add(Dense(20))
+    # model.add(Activation('relu'))
+    # model.add(Dropout(0.1))
+    model.add(Dense(output_dim=1))
+    #model.add(Dense(output_dim=1, init='uniform', activation='linear'))
 
-    model.add(Dense(output_dim=1, init='uniform', activation='linear'))
-
-    model.compile(loss='mean_absolute_error', optimizer='rmsprop', metrics=['accuracy'])  # Using mse loss results in faster convergence
+    model.compile(loss='mean_absolute_error', optimizer='adam', metrics=['accuracy'])  # Using mse loss results in faster convergence
     #
     # print numpy.array(train_input.get_density_list()).shape
     # print len(train_input.get_density_list())
@@ -101,7 +100,7 @@ def convolution_training(train_input, validation_input):
     # print train_input.get_density_list()
     X_train, y_train, X_test, y_test = numpy.array([t for t in train_input]), numpy.array(train_input.get_density_list()), numpy.array([t for t in validation_input]), numpy.array(validation_input.get_density_list())
 
-    model.fit(X_train, y_train, nb_epoch=200, batch_size=16, verbose=1 , validation_data=(X_test, y_test))
+    model.fit(X_train, y_train, nb_epoch=2000, batch_size=16, verbose=1 , validation_data=(X_test, y_test))
     #score = model.evaluate(X_test, y_test, batch_size=16)
 
 

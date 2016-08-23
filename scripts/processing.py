@@ -9,8 +9,8 @@ from tqdm import tqdm
 
 def main():
     VAL_RATIO = 0.2 #max 1
-    N_PICS = 3000
-    DENSITY_VALUE = 10
+    N_PICS = 5000
+    DENSITY_VALUE = 3
     bg = Image.open("/home/lucas/PycharmProjects/synthetic_deep_schisto/cells_models/bg.png")
     print bg.size
     schisto = Image.open("/home/lucas/PycharmProjects/synthetic_deep_schisto/cells_models/sample1.png")
