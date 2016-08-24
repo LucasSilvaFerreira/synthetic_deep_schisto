@@ -70,13 +70,9 @@ def convolution_training(train_input, validation_input):
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(3, 3)))
 
-    #
     model.add(Convolution2D(30, 2, 2))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(3, 3)))
-
-
-
 
     model.add(Flatten())
     model.add(Dense(100))
