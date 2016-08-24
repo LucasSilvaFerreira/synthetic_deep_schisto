@@ -3,7 +3,7 @@ import sys
 import re
 from skimage import io
 from scipy.ndimage import imread
-import Image
+from PIL import Image
 import random
 from tqdm import tqdm
 
@@ -11,10 +11,10 @@ def main():
     VAL_RATIO = 0.2 #max 1
     N_PICS = 5000
     DENSITY_VALUE = 3
-    bg = Image.open("/home/lucas/PycharmProjects/synthetic_deep_schisto/cells_models/bg.png")
+    bg = Image.open("cells_models/bg.png")
     print bg.size
-    schisto = Image.open("/home/lucas/PycharmProjects/synthetic_deep_schisto/cells_models/sample1.png")
-    white = Image.open("/home/lucas/PycharmProjects/synthetic_deep_schisto/cells_models/white.png")
+    schisto = Image.open("cells_models/sample1.png")
+    white = Image.open("cells_models/white.png")
     count_white_px = len([x for x in white.getdata()])
 
     print dir(schisto)
@@ -55,7 +55,7 @@ def main():
             density_in_field += density
 
             bg_frame.paste(schisto_r, (x_coor, y_coor), schisto_r)
-        bg_frame.save("/home/lucas/PycharmProjects/synthetic_deep_schisto/pics/{}_image_{}_|{}|.png".format(type_sample ,str(n), str(round(density_in_field, ndigits=3))))
+        bg_frame.save("pics/{}_image_{}_|{}|.png".format(type_sample ,str(n), str(round(density_in_field, ndigits=3))))
         #print "Density in  field: ", density_in_field
         #bg.show()
         #
