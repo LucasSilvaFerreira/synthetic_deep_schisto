@@ -3,7 +3,7 @@ import sys
 import re
 from skimage import io
 from scipy.ndimage import imread
-import Image
+from PIL import Image
 import random
 from tqdm import tqdm
 
