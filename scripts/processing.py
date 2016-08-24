@@ -19,6 +19,7 @@ def main():
     VAL_RATIO = 0.2 #max 1
     N_PICS = 100
     DENSITY_VALUE = 3
+    DISTANCE_TUNE = 50
     bg = Image.open("/home/lucas/PycharmProjects/synthetic_deep_schisto/cells_models/bg.png")
     print bg.size
     schisto = Image.open("/home/lucas/PycharmProjects/synthetic_deep_schisto/cells_models/sample1.png")
@@ -48,7 +49,7 @@ def main():
             if len(density_generator_history) != 0 :
                 result =  density_generator_history[0]
                 #print list(set([ check_distance(map(abs, np.array(x_random) - result)) for x_random in density_generator_history]))
-                while False in list(set([check_distance(map(abs, np.array(x_random) - result), distance_factor=50) for x_random in density_generator_history]))  :
+                while False in list(set([check_distance(map(abs, np.array(x_random) - result), distance_factor=DISTANCE_TUNE) for x_random in density_generator_history]))  :
                     print  np.array(x_random), result, 'teste'
                     x_coor = random.randint(-10, 140)
                     y_coor = random.randint(-10, 140)
